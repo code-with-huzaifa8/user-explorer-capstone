@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +26,9 @@
         <h2>Users</h2>
         <span id="count">0 loaded · 0 shown</span>
       </div>
+
       <div id="userList" class="user-list" tabindex="0" aria-label="Scrollable user list"></div>
+
       <div class="actions">
         <button id="loadMoreBtn" type="button">Load more users</button>
       </div>
@@ -34,6 +37,7 @@
     <section class="notes" aria-labelledby="commentHeading">
       <h2 id="commentHeading">Comment Box, XSS Safety</h2>
       <p class="helper-text">Comments are displayed as plain text for safety.</p>
+
       <form id="commentForm">
         <label for="commentInput">Write a comment</label>
         <input
@@ -45,50 +49,143 @@
         />
         <button type="submit">Add Comment</button>
       </form>
+
       <div id="comments" class="comments" aria-live="polite"></div>
     </section>
 
     <section class="notes" aria-labelledby="conceptsHeading">
-      <h2 id="conceptsHeading">JavaScript concepts used</h2>
+      <h2 id="conceptsHeading">JavaScript Concepts Used</h2>
 
       <details open>
-        <summary>Async/await and Event Loop</summary>
-        <p><code>loadUsers()</code> uses <code>await</code> to wait for the API response. While it waits, the browser can handle other work. After the Promise settles, the function continues.</p>
+        <summary>Variables and Data Types</summary>
+        <p>The app uses const and let to declare variables. Strings, numbers, booleans, arrays, objects, and null are used to store and manage data.</p>
+      </details>
+
+      <details>
+        <summary>Operators and Expressions</summary>
+        <p>Arithmetic, comparison, logical, assignment, and spread operators are used to perform calculations, compare values, and update data.</p>
+      </details>
+
+      <details>
+        <summary>Conditions and Control Flow</summary>
+        <p>If statements, return statements, and the ternary operator control what happens in different situations.</p>
+      </details>
+
+      <details>
+        <summary>Functions and Parameters</summary>
+        <p>Functions organize reusable code. The app uses parameters, return values, default parameters, and object destructuring.</p>
+      </details>
+
+      <details>
+        <summary>Scope and Closures</summary>
+        <p>Scope controls where variables can be accessed. The function returned by makeLoadHandler remembers currentState and loadFunction from its outer scope.</p>
+      </details>
+
+      <details>
+        <summary>Arrays and Objects</summary>
+        <p>Users are stored in an array, and each user is represented by an object. The app uses map(), filter(), slice(), and the spread operator.</p>
+      </details>
+
+      <details>
+        <summary>Template Literals and String Methods</summary>
+        <p>Template literals create dynamic strings. The app uses toLowerCase(), includes(), trim(), and slice() to process text.</p>
+      </details>
+
+      <details>
+        <summary>Loops</summary>
+        <p>The for...of loop goes through the visible users and creates a row for each user.</p>
+      </details>
+
+      <details>
+        <summary>DOM Manipulation</summary>
+        <p>The app selects HTML elements, creates elements, changes text and styles, sets attributes, and adds or removes child elements using DOM methods.</p>
+      </details>
+
+      <details>
+        <summary>Events and Event Object</summary>
+        <p>Click, scroll, input, and submit events make the app interactive. The event object provides information about an event, and preventDefault() stops the form's default submission behavior.</p>
+      </details>
+
+      <details>
+        <summary>Arrow Functions and Callbacks</summary>
+        <p>Arrow functions are used as event callbacks. A callback is a function passed to another function to be executed later.</p>
+      </details>
+
+      <details>
+        <summary>Async/Await and Promises</summary>
+        <p>Async functions and await handle asynchronous API requests. fetch() and response.json() return Promises that can be awaited.</p>
+      </details>
+
+      <details>
+        <summary>Fetch API and JSON</summary>
+        <p>The Fetch API requests user data from DummyJSON. The response is checked, and response.json() converts the response body into JavaScript data.</p>
+      </details>
+
+      <details>
+        <summary>Error Handling</summary>
+        <p>Try, catch, finally, and throw handle request errors. The finally block resets the loading state even if a request fails.</p>
       </details>
 
       <details>
         <summary>Pagination</summary>
-        <p>The app requests a batch of users from DummyJSON using <code>limit</code> and <code>skip</code>. This is offset-based pagination, not a true opaque cursor API.</p>
+        <p>The app loads users in batches using limit and skip. This is offset-based pagination rather than true cursor-based pagination.</p>
       </details>
 
       <details>
         <summary>Virtualisation</summary>
-        <p>The list can contain many loaded users, but only rows around the visible scroll position are added to the DOM.</p>
+        <p>The app renders only rows near the visible scroll position instead of adding every loaded user to the DOM.</p>
       </details>
 
       <details>
-        <summary>Closures</summary>
-        <p><code>makeLoadHandler()</code> returns a click handler that remembers the app state and loading function.</p>
+        <summary>DocumentFragment</summary>
+        <p>DocumentFragment groups newly created rows before they are added to the page.</p>
+      </details>
+
+      <details>
+        <summary>Event Loop</summary>
+        <p>While an API request is pending, the browser can handle other work. After an awaited Promise settles, the async function resumes.</p>
       </details>
 
       <details>
         <summary>Hoisting</summary>
-        <p>Function declarations such as <code>loadUsers</code> can be called before their written position. Variables declared with <code>let</code> and <code>const</code> cannot be used before initialization.</p>
+        <p>Function declarations can be called before their written position. Variables declared with let and const cannot be accessed before initialization.</p>
       </details>
 
       <details>
-        <summary><code>this</code> and arrow functions</summary>
-        <p>Arrow functions are used for callbacks and do not create their own <code>this</code>. This app avoids depending on <code>this</code> in event handlers.</p>
+        <summary>The this Keyword</summary>
+        <p>The app does not explicitly use this. Arrow functions do not create their own this value and instead inherit it from their surrounding scope.</p>
       </details>
 
       <details>
-        <summary>Security and XSS</summary>
-        <p>Comments, names, and emails are inserted with <code>textContent</code>, not <code>innerHTML</code>. This displays user input as text and helps prevent HTML injection and XSS.</p>
+        <summary>Input Handling and Validation</summary>
+        <p>The app reads search and comment input, trims comments, ignores empty comments, and uses HTML attributes such as required and maxlength.</p>
+      </details>
+
+      <details>
+        <summary>XSS Security</summary>
+        <p>The app uses textContent instead of innerHTML to display comments, names, and emails as text. This helps prevent HTML injection and cross-site scripting (XSS).</p>
+      </details>
+
+      <details>
+        <summary>Strict Mode</summary>
+        <p>The 'use strict' directive enables JavaScript strict mode, which helps catch certain coding mistakes.</p>
+      </details>
+
+      <details>
+        <summary>Type Conversion</summary>
+        <p>Number() converts the cursor position into a number, while String() converts the next position back into a string.</p>
+      </details>
+
+      <details>
+        <summary>Accessibility and Semantic HTML</summary>
+        <p>Labels, semantic elements, ARIA attributes, and keyboard focus support help make the app more accessible.</p>
       </details>
     </section>
   </main>
 
   <footer>Built with HTML, CSS, and vanilla JavaScript</footer>
+
   <script src="app.js"></script>
 </body>
 </html>
+```
