@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Explorer | JavaScript Capstone</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <p class="eyebrow">JAVASCRIPT CAPSTONE</p>
+    <h1>User Explorer</h1>
+    <p>Explore sample users fetched from an external testing API, loaded in small batches.</p>
+  </header>
+
+  <main class="container">
+    <section class="toolbar" aria-label="User list controls">
+      <label for="searchInput">Search users</label>
+      <input id="searchInput" type="search" placeholder="Search by name or email..." />
+      <p id="status" role="status">Ready to load users.</p>
+    </section>
+
+    <section class="list-panel" aria-label="Users">
+      <div class="list-heading">
+        <h2>Users</h2>
+        <span id="count">0 loaded · 0 shown</span>
+      </div>
+      <div id="userList" class="user-list" tabindex="0" aria-label="Scrollable user list"></div>
+      <div class="actions">
+        <button id="loadMoreBtn" type="button">Load more users</button>
+      </div>
+    </section>
+
+    <section class="notes" aria-labelledby="commentHeading">
+      <h2 id="commentHeading">Comment Box, XSS Safety</h2>
+      <p class="helper-text">Comments are displayed as plain text for safety.</p>
+      <form id="commentForm">
+        <label for="commentInput">Write a comment</label>
+        <input
+          id="commentInput"
+          type="text"
+          placeholder="Enter your comment..."
+          required
+          maxlength="500"
+        />
+        <button type="submit">Add Comment</button>
+      </form>
+      <div id="comments" class="comments" aria-live="polite"></div>
+    </section>
+
+    <section class="notes" aria-labelledby="conceptsHeading">
+      <h2 id="conceptsHeading">JavaScript concepts used</h2>
+
+      <details open>
+        <summary>Async/await and Event Loop</summary>
+        <p><code>loadUsers()</code> uses <code>await</code> to wait for the API response. While it waits, the browser can handle other work. After the Promise settles, the function continues.</p>
+      </details>
+
+      <details>
+        <summary>Pagination</summary>
+        <p>The app requests a batch of users from DummyJSON using <code>limit</code> and <code>skip</code>. This is offset-based pagination, not a true opaque cursor API.</p>
+      </details>
+
+      <details>
+        <summary>Virtualisation</summary>
+        <p>The list can contain many loaded users, but only rows around the visible scroll position are added to the DOM.</p>
+      </details>
+
+      <details>
+        <summary>Closures</summary>
+        <p><code>makeLoadHandler()</code> returns a click handler that remembers the app state and loading function.</p>
+      </details>
+
+      <details>
+        <summary>Hoisting</summary>
+        <p>Function declarations such as <code>loadUsers</code> can be called before their written position. Variables declared with <code>let</code> and <code>const</code> cannot be used before initialization.</p>
+      </details>
+
+      <details>
+        <summary><code>this</code> and arrow functions</summary>
+        <p>Arrow functions are used for callbacks and do not create their own <code>this</code>. This app avoids depending on <code>this</code> in event handlers.</p>
+      </details>
+
+      <details>
+        <summary>Security and XSS</summary>
+        <p>Comments, names, and emails are inserted with <code>textContent</code>, not <code>innerHTML</code>. This displays user input as text and helps prevent HTML injection and XSS.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer>Built with HTML, CSS, and vanilla JavaScript</footer>
+  <script src="app.js"></script>
+</body>
+</html>
