@@ -1,11 +1,9 @@
 'use strict';
 
-// App settings
 const BATCH_SIZE = 25;
 const ROW_HEIGHT = 76;
 const OVERSCAN = 4;
 
-// App state
 const state = {
   users: [],
   nextCursor: '0',
@@ -14,7 +12,6 @@ const state = {
   query: ''
 };
 
-// HTML elements
 const userList = document.querySelector('#userList');
 const statusText = document.querySelector('#status');
 const countText = document.querySelector('#count');
@@ -29,8 +26,6 @@ virtualRows.className = 'virtual-rows';
 
 userList.append(spacer, virtualRows);
 
-// Fetch one batch from DummyJSON.
-// DummyJSON uses limit/skip, so this is offset-based pagination.
 async function fetchUsersBatch({ cursor = '0', limit = BATCH_SIZE } = {}) {
   const response = await fetch(
     `https://dummyjson.com/users?limit=${limit}&skip=${cursor}`
@@ -56,7 +51,6 @@ async function fetchUsersBatch({ cursor = '0', limit = BATCH_SIZE } = {}) {
   };
 }
 
-// Load the next batch.
 async function loadUsers() {
   if (state.loading || !state.hasMore) return;
 
@@ -90,7 +84,6 @@ async function loadUsers() {
   }
 }
 
-// Render only rows near the visible scroll position.
 function renderVirtualList() {
   const filteredUsers = state.users.filter(user => {
     const searchableText = `${user.name} ${user.email}`.toLowerCase();
@@ -142,12 +135,10 @@ function renderVirtualList() {
   loadMoreBtn.textContent = state.hasMore ? 'Load more users' : 'No more users';
 }
 
-// Update the status message safely.
 function updateStatus(message) {
   statusText.textContent = message;
 }
 
-// Closure: the returned click handler remembers currentState and loadFunction.
 function makeLoadHandler(currentState, loadFunction) {
   return function handleLoadClick() {
     if (!currentState.loading && currentState.hasMore) {
@@ -159,7 +150,6 @@ function makeLoadHandler(currentState, loadFunction) {
 const handleLoadMore = makeLoadHandler(state, loadUsers);
 loadMoreBtn.addEventListener('click', handleLoadMore);
 
-// Arrow functions are used as event callbacks.
 userList.addEventListener('scroll', () => renderVirtualList());
 
 searchInput.addEventListener('input', event => {
@@ -168,7 +158,6 @@ searchInput.addEventListener('input', event => {
   renderVirtualList();
 });
 
-// XSS safety demo: render comments as text, never with innerHTML.
 const commentForm = document.querySelector('#commentForm');
 const commentInput = document.querySelector('#commentInput');
 const comments = document.querySelector('#comments');
@@ -187,5 +176,4 @@ commentForm.addEventListener('submit', event => {
   commentInput.value = '';
 });
 
-// Start the app.
 loadUsers();
